@@ -17,7 +17,7 @@ int main(void) {
 		printf("Yay!\n");
 	}
 
-	if (!XkbSelectEvents(dispay, XkbUseCoreKbd, XkbStateNotifyMask, XkbStateNotifyMask)) {
+	if (!XkbSelectEventDetails(dispay, XkbUseCoreKbd, XkbStateNotify, (XkbGroupStateMask|XkbModifierStateMask), (XkbGroupStateMask|XkbModifierStateMask))) {
 		printf("FAIL2\n");
 	}
 
@@ -27,6 +27,7 @@ int main(void) {
 		XNextEvent(dispay, &event.core);
 		if (event.type == xkb_event && event.any.xkb_type == XkbStateNotify) {
 			unsigned char caps = (event.state.mods & 1); // shift presed
+			printf("EV!\n");
 			if (event.state.mods & 2) { // caps pressed
 				caps = !caps;
 			}
